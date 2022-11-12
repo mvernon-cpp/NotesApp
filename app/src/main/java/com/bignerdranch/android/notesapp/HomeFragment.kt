@@ -13,8 +13,6 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
-
         }
     }
 
@@ -28,11 +26,9 @@ class HomeFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
             HomeFragment().apply {
                 arguments = Bundle().apply {
-
-
                 }
             }
     }
