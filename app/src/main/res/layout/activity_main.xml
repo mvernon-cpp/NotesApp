@@ -4,8 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".MainActivity">
 
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_15ssp"
+        android:text="@string/notes"
+        android:paddingStart="@dimen/_10sdp"
+        android:paddingTop="@dimen/_10sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/manrope_bold"
+        android:textColor="@color/colorWhite"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
