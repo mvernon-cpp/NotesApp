@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/CS4750/Proj/NotesApp/app/src/main/res/drawable/background.xml" value="0.1" />
         <entry key="..\:/CS4750/Proj/NotesApp/app/src/main/res/drawable/ic_back.xml" value="0.1" />
-        <entry key="..\:/CS4750/Proj/NotesApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/CS4750/Proj/NotesApp/app/src/main/res/drawable/ic_link.xml" value="0.1195" />
+        <entry key="..\:/CS4750/Proj/NotesApp/app/src/main/res/drawable/ic_search.xml" value="0.1" />
+        <entry key="..\:/CS4750/Proj/NotesApp/app/src/main/res/drawable/ic_tick.xml" value="0.1195" />
+        <entry key="..\:/CS4750/Proj/NotesApp/app/src/main/res/layout/activity_main.xml" value="1.0" />
       </map>
     </option>
   </component>
