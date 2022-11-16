@@ -32,4 +32,20 @@ class HomeFragment : Fragment() {
                 }
             }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        fabBtnCreateNote.setOnClickListener{
+            replaceFragment(CreateNoteFragment.newInstance(), true)
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment, istransition: Boolean) {
+        val fragmentTransition = requireActivity().supportFragmentManager.beginTransaction()
+
+        if(istransition){
+            fragmentTransition.setCustomAnimations(android.R.anim.slide_out_right, android.R.anim.slide_in_left)
+        }
+        fragmentTransition.replace(R.id.frame_layout,fragment).addToBackStack(fragment.javaClass.simpleName)
+    }
 }
