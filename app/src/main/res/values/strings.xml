@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">NotesApp</string>
     <string name="notes">Notes</string>
+    <string name="notes_title">Notes Title</string>
+    <string name="notes_sub_title">Notes sub title</string>
+    <string name="notes_desc">Notes Description</string>
+    <string name="notes_date">Date</string>
     <string name="search">Search Notes</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
