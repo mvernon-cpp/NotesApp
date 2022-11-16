@@ -91,7 +91,7 @@
             android:background="@color/colorBlue" />
 
         <EditText
-            android:id="@+id/etNoteSubTitle"
+            android:id="@+id/etNoteSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
