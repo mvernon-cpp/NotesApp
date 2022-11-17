@@ -47,12 +47,12 @@ class HomeFragment : Fragment() {
 
         recycler_view.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
-        launch {
-            context?.let {
-                var notes = NotesDatabase.getDatabase(it).notesDao().getAllNotes()
-                recycler_view.adapter = NotesAdapter(notes)
-            }
-        }
+//        launch {
+//            context?.let {
+//                var notes = NotesDatabase.getDatabase(it).notesDao().getAllNotes()
+//                recycler_view.adapter = NotesAdapter(notes)
+//            }
+//        }
 
 
         fabBtnCreateNote.setOnClickListener{
