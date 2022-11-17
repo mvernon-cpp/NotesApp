@@ -5,11 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.bignerdranch.android.notesapp.adapter.NotesAdapter
+import com.bignerdranch.android.notesapp.database.NotesDatabase
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +42,25 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        recycler_view.setHasFixedSize(true)
+
+        recycler_view.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+
+        launch {
+            context?.let {
+                var notes = NotesDatabase.getDatabase(it).notesDao().getAllNotes()
+                recycler_view.adapter = NotesAdapter(notes)
+            }
+        }
+
+
         fabBtnCreateNote.setOnClickListener{
             replaceFragment(CreateNoteFragment.newInstance(), true)
         }
     }
+
+
 
     private fun replaceFragment(fragment: Fragment, istransition: Boolean) {
         val fragmentTransition = requireActivity().supportFragmentManager.beginTransaction()

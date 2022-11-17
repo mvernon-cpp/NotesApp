@@ -86,6 +86,7 @@ class CreateNoteFragment : BaseFragment() {
             }
 
         }
+
     }
 
     private fun replaceFragment(fragment: Fragment, istransition: Boolean) {
