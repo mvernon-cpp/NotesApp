@@ -14,7 +14,7 @@ abstract class NotesDatabase: RoomDatabase() {
         var notesDatabase:NotesDatabase? = null
         @Synchronized
         fun getDatabase(context: Context) : NotesDatabase {
-            if(notesDatabase != null) {
+            if(notesDatabase == null) {
                 notesDatabase = Room.databaseBuilder(
                     context, NotesDatabase::class.java, "notes.db"
                 ).build()
