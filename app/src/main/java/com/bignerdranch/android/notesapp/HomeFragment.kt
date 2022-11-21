@@ -1,22 +1,21 @@
 package com.bignerdranch.android.notesapp
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bignerdranch.android.notesapp.adapter.NotesAdapter
 import com.bignerdranch.android.notesapp.database.NotesDatabase
+import com.bignerdranch.android.notesapp.dao.NoteDao
+import kotlinx.android.synthetic.main.fragment_create_note.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
-
 import kotlinx.coroutines.launch
 
+class HomeFragment : BaseFragment() {
 
-class HomeFragment : Fragment() {
-
+    var notesAdapter: NotesAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -45,28 +44,29 @@ class HomeFragment : Fragment() {
 
         recycler_view.setHasFixedSize(true)
 
-        recycler_view.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recycler_view.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
 
-//        launch {
-//            context?.let {
-//                var notes = NotesDatabase.getDatabase(it).notesDao().getAllNotes()
-//                recycler_view.adapter = NotesAdapter(notes)
-//            }
-//        }
+        launch {
+            context?.let {
+                var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()
+                recycler_view.adapter = NotesAdapter(notes)
+            }
+        }
 
-        fabBtnCreateNote.setOnClickListener{
-            replaceFragment(CreateNoteFragment.newInstance(), true)
+        fabBtnCreateNote.setOnClickListener {
+            replaceFragment(CreateNoteFragment.newInstance(),false)
         }
     }
 
 
-
-    private fun replaceFragment(fragment: Fragment, istransition: Boolean) {
+    fun replaceFragment(fragment:Fragment, istransition:Boolean){
         val fragmentTransition = requireActivity().supportFragmentManager.beginTransaction()
 
-        if(istransition){
-            fragmentTransition.setCustomAnimations(android.R.anim.slide_out_right, android.R.anim.slide_in_left)
+        if (istransition){
+            fragmentTransition.setCustomAnimations(android.R.anim.slide_out_right,android.R.anim.slide_in_left)
         }
-        fragmentTransition.replace(R.id.frame_layout,fragment).addToBackStack(fragment.javaClass.simpleName)
+        fragmentTransition.replace(R.id.frame_layout,fragment).addToBackStack(fragment.javaClass.simpleName).commit()
     }
+
+
 }
