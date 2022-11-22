@@ -11,8 +11,17 @@
         <entry key="..\:/CS4750/Proj/NotesApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/CS4750/Proj/NotesApp/app/src/main/res/layout/fragment_create_note.xml" value="0.4" />
         <entry key="..\:/CS4750/Proj/NotesApp/app/src/main/res/layout/fragment_home.xml" value="0.25364583333333335" />
+        <entry key="app/src/main/res/drawable-v24/note_color_2.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/note_color_3.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/note_color_4.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/note_color_5.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/note_color_6.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/note_color_7.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/note_color_1.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2151268115942029" />
+        <entry key="app/src/main/res/layout/fragment_create_note.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2151268115942029" />
+        <entry key="app/src/main/res/layout/fragment_notes_bottom_sheet.xml" value="0.2664871215820313" />
         <entry key="app/src/main/res/layout/item_rv_notes.xml" value="0.1956521739130435" />
       </map>
     </option>
