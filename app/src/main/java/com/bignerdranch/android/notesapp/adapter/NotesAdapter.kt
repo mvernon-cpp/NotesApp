@@ -2,6 +2,7 @@ package com.bignerdranch.android.notesapp.adapter
 
 import android.annotation.SuppressLint
 import android.app.PendingIntent.getActivity
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.notesapp.R
 import com.bignerdranch.android.notesapp.entities.Notes
+import kotlinx.android.synthetic.main.fragment_create_note.view.*
 import kotlinx.android.synthetic.main.item_rv_notes.view.*
+import kotlinx.android.synthetic.main.item_rv_notes.view.imgNote
+import kotlinx.android.synthetic.main.item_rv_notes.view.tvDateTime
+import kotlinx.android.synthetic.main.item_rv_notes.view.tvWebLink
 
 class NotesAdapter (val arrList: List<Notes>) :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>(){
@@ -41,6 +46,21 @@ class NotesAdapter (val arrList: List<Notes>) :
             //other solutions i found online
             holder.itemView.cardView.setCardBackgroundColor(R.color.colorLightBlack)
             //holder.itemView.cardView.setCardBackgroundColor(ContextCompat.getColor(getActivity(),R.color.colorLightBlack))
+        }
+        if(arrList[position].imgPath != null){
+            holder.itemView.imgNote.setImageBitmap(BitmapFactory.decodeFile(arrList[position].imgPath))
+            holder.itemView.imgNote.visibility = View.VISIBLE
+        }
+        else{
+            holder.itemView.imgNote.visibility = View.GONE
+        }
+
+        if(arrList[position].webLink != null){
+            holder.itemView.tvWebLink.text = arrList[position].webLink
+            holder.itemView.tvWebLink.visibility = View.VISIBLE
+        }
+        else{
+            holder.itemView.tvWebLink.visibility = View.GONE
         }
     }
 

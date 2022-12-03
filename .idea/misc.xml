@@ -17,12 +17,13 @@
         <entry key="app/src/main/res/drawable-v24/note_color_5.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/note_color_6.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/note_color_7.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/bottom_sheet_view.xml" value="0.1085" />
         <entry key="app/src/main/res/drawable/note_color_1.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2151268115942029" />
-        <entry key="app/src/main/res/layout/fragment_create_note.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_create_note.xml" value="0.195678225750198" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2151268115942029" />
-        <entry key="app/src/main/res/layout/fragment_notes_bottom_sheet.xml" value="0.2664871215820313" />
-        <entry key="app/src/main/res/layout/item_rv_notes.xml" value="0.1956521739130435" />
+        <entry key="app/src/main/res/layout/fragment_notes_bottom_sheet.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_rv_notes.xml" value="0.1" />
       </map>
     </option>
   </component>
