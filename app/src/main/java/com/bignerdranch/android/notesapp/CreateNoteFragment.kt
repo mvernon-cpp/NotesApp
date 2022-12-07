@@ -28,11 +28,14 @@ import com.bignerdranch.android.notesapp.util.NoteBottomSheetFragment
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import android.Manifest
 
 import kotlinx.android.synthetic.main.fragment_create_note.*
 import kotlinx.android.synthetic.main.fragment_create_note.imgMore
 import kotlinx.android.synthetic.main.fragment_create_note.layoutWebUrl
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_notes_bottom_sheet.*
+import kotlinx.android.synthetic.main.item_rv_notes.view.*
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import java.lang.Exception
@@ -47,11 +50,13 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
     private var REQUEST_CODE_IMAGE = 456
     private var selectedImagePath = ""
     private var webLink = ""
+    private var noteId = -1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
+
+        noteId = requireArguments().getInt("noteId")
     }
 
     override fun onCreateView(
@@ -73,6 +78,36 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if( noteId != -1){
+            launch {
+                context?.let {
+                    var notes = NotesDatabase.getDatabase(it).noteDao().getSpecificNote(noteId)
+
+//                    colorView.setBackgroundColor(Color.parseColor(notes.color))
+                    etNoteTitle.setText(notes.title)
+                    etNoteSubtitle.setText(notes.subTitle)
+                    etNoteDesc.setText(notes.noteText)
+
+                    if(notes.imgPath != ""){
+                        imgNote.setImageBitmap(BitmapFactory.decodeFile(notes.imgPath))
+                        imgNote.visibility = View.VISIBLE
+                    }
+                    else{
+                        imgNote.visibility = View.GONE
+                    }
+
+                    if(notes.webLink != ""){
+                        tvWebLink.text = notes.webLink
+                        tvWebLink.visibility = View.VISIBLE
+                    }
+                    else{
+                        tvWebLink.visibility = View.GONE
+                    }
+                }
+            }
+
+        }
 
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
             BroadcastReceiver, IntentFilter("bottom_sheet_action")
@@ -133,6 +168,7 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
             notes.subTitle = etNoteSubtitle.text.toString()
             notes.noteText = etNoteDesc.text.toString()
             notes.dateTime = currentDate
+            notes.color = selectedColor
             notes.imgPath = selectedImagePath
             notes.webLink = webLink
             context?.let {
@@ -262,6 +298,7 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
         return filePath
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == REQUEST_CODE_IMAGE && resultCode == RESULT_OK){

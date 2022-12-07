@@ -17,9 +17,11 @@ import kotlinx.android.synthetic.main.item_rv_notes.view.imgNote
 import kotlinx.android.synthetic.main.item_rv_notes.view.tvDateTime
 import kotlinx.android.synthetic.main.item_rv_notes.view.tvWebLink
 
-class NotesAdapter (val arrList: List<Notes>) :
+class NotesAdapter () :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>(){
+    var listener:OnItemClickListener? = null
 
+    var arrList = ArrayList<Notes>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
         return NotesViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_rv_notes,parent, false)
@@ -30,7 +32,14 @@ class NotesAdapter (val arrList: List<Notes>) :
         return arrList.size
     }
 
-    @SuppressLint("ResourceAsColor")
+    fun setData(arrNotesList: List<Notes>) {
+        arrList = arrNotesList as ArrayList<Notes>
+    }
+
+    fun setOnClickListener(listener1: OnItemClickListener){
+        listener = listener1
+    }
+//    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: NotesAdapter.NotesViewHolder, position: Int) {
         holder.itemView.tvTitle.text = arrList[position].title
         holder.itemView.tvDesc.text = arrList[position].noteText
@@ -41,10 +50,10 @@ class NotesAdapter (val arrList: List<Notes>) :
         }
         else{
             //from the tutorial
-            //holder.itemView.cardView.setCardBackgroundColor(Color.parseColor(R.color.colorLightBlack.toString()))
+//            holder.itemView.cardView.setCardBackgroundColor(Color.parseColor(R.color.colorLightBlack.toString()))
 
             //other solutions i found online
-            holder.itemView.cardView.setCardBackgroundColor(R.color.colorLightBlack)
+//            holder.itemView.cardView.setCardBackgroundColor(R.color.colorLightBlack)
             //holder.itemView.cardView.setCardBackgroundColor(ContextCompat.getColor(getActivity(),R.color.colorLightBlack))
         }
         if(arrList[position].imgPath != null){
@@ -62,10 +71,17 @@ class NotesAdapter (val arrList: List<Notes>) :
         else{
             holder.itemView.tvWebLink.visibility = View.GONE
         }
+
+        holder.itemView.cardView.setOnClickListener {
+            listener!!.onClicked(arrList[position].id!!)
+        }
     }
 
     class NotesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     }
 
+    interface OnItemClickListener{
+        fun onClicked(noteId: Int)
+    }
 }
