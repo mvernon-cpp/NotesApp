@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorBlue"
     tools:context=".MainActivity">
 
     <ImageView
@@ -44,8 +44,8 @@
         android:inputType="text"
         android:maxLines="1"
         android:padding="@dimen/_10sdp"
-        android:textColor="@color/colorWhite"
-        android:textColorHint="@color/colorGray"
+        android:textColor="@color/colorDarkBlack"
+        android:textColorHint="@color/colorDarkBlack"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,8 +64,8 @@
         android:fontFamily="@font/manrope_bold"
         android:maxLines="1"
         android:paddingStart="@dimen/_10sdp"
-        android:textColor="@color/colorGray"
-        android:textColorHint="@color/colorWhite"
+        android:textColor="@color/colorDarkBlack"
+        android:textColorHint="@color/colorDarkBlack"
         android:hint="@string/notes_date"
         android:textSize="@dimen/_8ssp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,8 +101,8 @@
             android:inputType="text"
             android:maxLines="1"
             android:padding="@dimen/_10sdp"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorGray"
+            android:textColor="@color/colorDarkBlack"
+            android:textColorHint="@color/colorDarkBlack"
             android:textSize="@dimen/_10ssp" />
     </LinearLayout>
 
@@ -263,8 +263,8 @@
             android:hint="@string/notes_desc"
             android:inputType="textMultiLine"
             android:padding="@dimen/_10sdp"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorGray"
+            android:textColor="@color/colorDarkBlack"
+            android:textColorHint="@color/colorDarkBlack"
             android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
