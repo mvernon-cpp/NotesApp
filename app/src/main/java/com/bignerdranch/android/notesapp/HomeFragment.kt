@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bignerdranch.android.notesapp.adapter.NotesAdapter
@@ -13,9 +14,12 @@ import com.bignerdranch.android.notesapp.entities.Notes
 import kotlinx.android.synthetic.main.fragment_create_note.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeFragment : BaseFragment() {
 
+    var arrNotes = ArrayList<Notes>()
     var notesAdapter: NotesAdapter = NotesAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +55,7 @@ class HomeFragment : BaseFragment() {
             context?.let {
                 var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()
                 notesAdapter!!.setData(notes)
+                arrNotes = notes as ArrayList<Notes>
                 recycler_view.adapter = notesAdapter
             }
         }
@@ -60,6 +65,27 @@ class HomeFragment : BaseFragment() {
         fabBtnCreateNote.setOnClickListener {
             replaceFragment(CreateNoteFragment.newInstance(),false)
         }
+
+        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                var tempArr = ArrayList<Notes>()
+
+                for(arr in arrNotes)
+                {
+                    if (arr.title!!.toLowerCase(Locale.getDefault()).contains(p0.toString()))
+                    {
+                        tempArr.add(arr)
+                    }
+                }
+                notesAdapter.setData(tempArr)
+                notesAdapter.notifyDataSetChanged()
+                return true
+            }
+        })
     }
 
     private val onClicked = object :NotesAdapter.OnItemClickListener{
