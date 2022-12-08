@@ -29,9 +29,11 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import android.Manifest
+import androidx.lifecycle.ViewTreeViewModelStoreOwner
 
 import kotlinx.android.synthetic.main.fragment_create_note.*
 import kotlinx.android.synthetic.main.fragment_create_note.imgMore
+import kotlinx.android.synthetic.main.fragment_create_note.layoutImage
 import kotlinx.android.synthetic.main.fragment_create_note.layoutWebUrl
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_notes_bottom_sheet.*
@@ -90,19 +92,29 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
                     etNoteDesc.setText(notes.noteText)
 
                     if(notes.imgPath != ""){
+                        selectedImagePath = notes.imgPath!!
                         imgNote.setImageBitmap(BitmapFactory.decodeFile(notes.imgPath))
+                        layoutImage.visibility = View.VISIBLE
                         imgNote.visibility = View.VISIBLE
+                        imgDelete.visibility = View.VISIBLE
                     }
                     else{
+                        layoutImage.visibility = View.GONE
                         imgNote.visibility = View.GONE
+                        imgDelete.visibility = View.GONE
                     }
 
                     if(notes.webLink != ""){
+                        webLink = notes.webLink!!
                         tvWebLink.text = notes.webLink
-                        tvWebLink.visibility = View.VISIBLE
+                        layoutWebUrl.visibility = View.VISIBLE
+                        imgUrlDelete.visibility = View.VISIBLE
+                        etWebLink.setText(notes.webLink)
+                        imgUrlDelete.visibility = View.VISIBLE
                     }
                     else{
-                        tvWebLink.visibility = View.GONE
+                        imgUrlDelete.visibility = View.GONE
+                        layoutWebUrl.visibility = View.GONE
                     }
                 }
             }
@@ -120,7 +132,14 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
         tvDateTime.text = currentDate
 
         imgDone.setOnClickListener{
-            saveNote()
+            if (noteId != 1)
+            {
+                updateNote()
+            }
+            else
+            {
+                saveNote()
+            }
         }
 
         imgBack.setOnClickListener{
@@ -131,6 +150,12 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
             var noteBottomSheetFragment = NoteBottomSheetFragment.newInstance()
             noteBottomSheetFragment.show(requireActivity().supportFragmentManager,"Note Bottom Sheet Fragment")
         }
+
+        imgDelete.setOnClickListener{
+            selectedImagePath = ""
+            layoutImage.visibility = View.GONE
+        }
+
         btnOk.setOnClickListener {
             if(etWebLink.text.toString().trim().isNotEmpty()){
                 checkWebUrl()
@@ -139,12 +164,60 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
             }
         }
         btnCancel.setOnClickListener {
-            layoutWebUrl.visibility = View.GONE
+            if( noteId != -1)
+            {
+                tvWebLink.visibility = View.VISIBLE
+                layoutWebUrl.visibility = View.GONE
+            }
+            else
+            {
+                layoutWebUrl.visibility = View.GONE
+            }
+        }
+
+        imgUrlDelete.setOnClickListener{
+            webLink = ""
+            tvWebLink.visibility = View.GONE
+            imgUrlDelete.visibility = View.GONE
+            layoutWebUrl.visibility = View. GONE
+        }
+
+        imgImgDelete.setOnClickListener{
+            webLink = ""
+            tvWebLink.visibility = View.GONE
         }
 
         tvWebLink.setOnClickListener {
             var intent = Intent(Intent.ACTION_VIEW,Uri.parse(etWebLink.text.toString()))
             startActivity(intent)
+        }
+
+
+    }
+
+    private fun updateNote() {
+        launch {
+
+            context?.let {
+                var notes = NotesDatabase.getDatabase(it).noteDao().getSpecificNote(noteId)
+
+                notes.title = etNoteTitle.text.toString()
+                notes.subTitle = etNoteSubtitle.text.toString()
+                notes.noteText = etNoteDesc.text.toString()
+                notes.dateTime = currentDate
+                notes.color = selectedColor
+                notes.imgPath = selectedImagePath
+                notes.webLink = webLink
+
+                NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
+                etNoteTitle.setText("")
+                etNoteSubtitle.setText("")
+                etNoteDesc.setText("")
+                imgNote.visibility = View.GONE
+                layoutImage.visibility = View.GONE
+                tvWebLink.visibility = View.GONE
+                requireActivity().supportFragmentManager.popBackStack()
+            }
         }
     }
 
@@ -177,6 +250,7 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
                 etNoteSubtitle.setText("")
                 etNoteDesc.setText("")
                 imgNote.visibility = View.GONE
+                layoutImage.visibility = View.GONE
                 tvWebLink.visibility = View.GONE
                 requireActivity().supportFragmentManager.popBackStack()
             }
@@ -245,6 +319,7 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
 
                 else -> {
                     imgNote.visibility = View.GONE
+                    layoutImage.visibility = View.GONE
                     layoutWebUrl.visibility = View.GONE
                     selectedColor = p1.getStringExtra("actionColor")!!
                     colorView.setBackgroundColor(Color.parseColor(selectedColor))
@@ -310,6 +385,7 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
                         var bitmap = BitmapFactory.decodeStream(inputStream)
                         imgNote.setImageBitmap(bitmap)
                         imgNote.visibility = View.VISIBLE
+                        layoutImage.visibility = View.VISIBLE
 
                         selectedImagePath = getPathFromUri(selectedImageUrl)!!
                     }catch (e:Exception){
