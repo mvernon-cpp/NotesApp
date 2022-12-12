@@ -7,7 +7,6 @@
     android:background="@color/colorBlue"
     tools:context=".MainActivity">
 
-
     <TextView
         android:id="@+id/tv1"
         android:layout_width="match_parent"
@@ -20,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:fontFamily="@font/manrope_bold"
-        android:textColor="@color/colorDarkBlack"/>
+        android:textColor="@color/colorWhite"/>
 
     <SearchView
         android:layout_width="match_parent"
@@ -52,8 +51,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/colorDarkBlack"
+        android:background="@color/colorPrimary"
         android:padding="@dimen/_10sdp"
+        android:visibility="invisible"
         android:orientation="horizontal">
 
         <ImageView
@@ -82,7 +82,7 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@color/ColorBlackNote"
         android:id="@+id/fabBtnCreateNote"
         android:tint="@color/colorWhite"
         android:layout_marginEnd="@dimen/_20sdp"
@@ -90,4 +90,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/ic_add"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

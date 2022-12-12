@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bignerdranch.android.notesapp.adapter.NotesAdapter
 import com.bignerdranch.android.notesapp.database.NotesDatabase
-import com.bignerdranch.android.notesapp.dao.NoteDao
+//import com.bignerdranch.android.notesapp.dao.NoteDao
 import com.bignerdranch.android.notesapp.entities.Notes
-import kotlinx.android.synthetic.main.fragment_create_note.*
+import com.codingwithme.notesapp.CreateNoteFragment
+//import kotlinx.android.synthetic.main.fragment_create_note.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.launch
 import java.util.*
@@ -76,7 +77,7 @@ class HomeFragment : BaseFragment() {
 
                 for(arr in arrNotes)
                 {
-                    if (arr.title!!.toLowerCase(Locale.getDefault()).contains(p0.toString()))
+                    if (arr.title!!.lowercase(Locale.getDefault()).contains(p0.toString()))
                     {
                         tempArr.add(arr)
                     }

@@ -1,9 +1,8 @@
-package com.bignerdranch.android.notesapp
+package com.codingwithme.notesapp
 
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.Manifest
+//import android.app.Activity
 import android.app.Activity.RESULT_OK
-import android.app.appsearch.SetSchemaRequest.READ_EXTERNAL_STORAGE
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -12,37 +11,24 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.os.PatternMatcher
 import android.provider.MediaStore
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.bignerdranch.android.notesapp.BaseFragment
+import com.bignerdranch.android.notesapp.R
 import com.bignerdranch.android.notesapp.database.NotesDatabase
 import com.bignerdranch.android.notesapp.entities.Notes
 import com.bignerdranch.android.notesapp.util.NoteBottomSheetFragment
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
-import android.Manifest
-import androidx.lifecycle.ViewTreeViewModelStoreOwner
-
 import kotlinx.android.synthetic.main.fragment_create_note.*
-import kotlinx.android.synthetic.main.fragment_create_note.imgMore
-import kotlinx.android.synthetic.main.fragment_create_note.layoutImage
-import kotlinx.android.synthetic.main.fragment_create_note.layoutWebUrl
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_notes_bottom_sheet.*
-import kotlinx.android.synthetic.main.item_rv_notes.view.*
+import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
-import java.lang.Exception
-import java.net.URL
-
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,EasyPermissions.RationaleCallbacks {
 
@@ -54,11 +40,10 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
     private var webLink = ""
     private var noteId = -1
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        noteId = requireArguments().getInt("noteId")
+        noteId = requireArguments().getInt("noteId",-1)
     }
 
     override fun onCreateView(
@@ -81,14 +66,14 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if( noteId != -1){
+        if (noteId != -1){
             launch {
                 context?.let {
                     var notes = NotesDatabase.getDatabase(it).noteDao().getSpecificNote(noteId)
 
-//                    colorView.setBackgroundColor(Color.parseColor(notes.color))
+                    colorView.setBackgroundColor(Color.parseColor(notes.color))
                     etNoteTitle.setText(notes.title)
-                    etNoteSubtitle.setText(notes.subTitle)
+                    etNoteSubTitle.setText(notes.subTitle)
                     etNoteDesc.setText(notes.noteText)
 
                     if(notes.imgPath != ""){
@@ -108,7 +93,6 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
                         webLink = notes.webLink!!
                         tvWebLink.text = notes.webLink
                         layoutWebUrl.visibility = View.VISIBLE
-                        imgUrlDelete.visibility = View.VISIBLE
                         etWebLink.setText(notes.webLink)
                         imgUrlDelete.visibility = View.VISIBLE
                     }
@@ -118,9 +102,7 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
                     }
                 }
             }
-
         }
-
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
             BroadcastReceiver, IntentFilter("bottom_sheet_action")
         )
@@ -132,7 +114,7 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
         tvDateTime.text = currentDate
 
         imgDone.setOnClickListener{
-            if (noteId != 1)
+            if (noteId != -1)
             {
                 updateNote()
             }
@@ -160,7 +142,7 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
             if(etWebLink.text.toString().trim().isNotEmpty()){
                 checkWebUrl()
             }else{
-                Toast.makeText(requireContext(),"Url s Required",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),"Url is Required",Toast.LENGTH_SHORT).show()
             }
         }
         btnCancel.setOnClickListener {
@@ -179,12 +161,7 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
             webLink = ""
             tvWebLink.visibility = View.GONE
             imgUrlDelete.visibility = View.GONE
-            layoutWebUrl.visibility = View. GONE
-        }
-
-        imgImgDelete.setOnClickListener{
-            webLink = ""
-            tvWebLink.visibility = View.GONE
+            layoutWebUrl.visibility = View.GONE
         }
 
         tvWebLink.setOnClickListener {
@@ -202,7 +179,7 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
                 var notes = NotesDatabase.getDatabase(it).noteDao().getSpecificNote(noteId)
 
                 notes.title = etNoteTitle.text.toString()
-                notes.subTitle = etNoteSubtitle.text.toString()
+                notes.subTitle = etNoteSubTitle.text.toString()
                 notes.noteText = etNoteDesc.text.toString()
                 notes.dateTime = currentDate
                 notes.color = selectedColor
@@ -211,7 +188,7 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
 
                 NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
                 etNoteTitle.setText("")
-                etNoteSubtitle.setText("")
+                etNoteSubTitle.setText("")
                 etNoteDesc.setText("")
                 imgNote.visibility = View.GONE
                 layoutImage.visibility = View.GONE
@@ -235,22 +212,22 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
 
     private fun saveNote() {
         if( etNoteTitle.text.isNullOrEmpty()) {
-            Toast.makeText(context,"Note Title Required", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"Note Title is Required", Toast.LENGTH_SHORT).show()
         }
 
-        else if( etNoteSubtitle.text.isNullOrEmpty()) {
-            Toast.makeText(context,"Note Subtitle Required", Toast.LENGTH_SHORT).show()
+        else if(etNoteSubTitle.text.isNullOrEmpty()) {
+            Toast.makeText(context,"Note Sub Title is Required", Toast.LENGTH_SHORT).show()
         }
 
         else if( etNoteDesc.text.isNullOrEmpty()) {
-            Toast.makeText(context,"Note Description Required", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"Note Description is Required",Toast.LENGTH_SHORT).show()
         }
         else{
 
         launch {
             var notes = Notes()
             notes.title = etNoteTitle.text.toString()
-            notes.subTitle = etNoteSubtitle.text.toString()
+            notes.subTitle = etNoteSubTitle.text.toString()
             notes.noteText = etNoteDesc.text.toString()
             notes.dateTime = currentDate
             notes.color = selectedColor
@@ -259,7 +236,7 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
             context?.let {
                 NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
                 etNoteTitle.setText("")
-                etNoteSubtitle.setText("")
+                etNoteSubTitle.setText("")
                 etNoteDesc.setText("")
                 imgNote.visibility = View.GONE
                 layoutImage.visibility = View.GONE
@@ -286,36 +263,36 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
     private val BroadcastReceiver : BroadcastReceiver = object : BroadcastReceiver(){
         override fun onReceive(p0: Context?, p1: Intent?) {
 
-            val actionColor = p1!!.getStringExtra("action")
+            var actionColor = p1!!.getStringExtra("action")
 
             when(actionColor!!){
 
                 "Blue" -> {
-                    selectedColor = p1.getStringExtra("actionColor")!!
+                    selectedColor = p1.getStringExtra("selectedColor")!!
                     colorView.setBackgroundColor(Color.parseColor(selectedColor))
                 }
                 "Yellow" -> {
-                    selectedColor = p1.getStringExtra("actionColor")!!
+                    selectedColor = p1.getStringExtra("selectedColor")!!
                     colorView.setBackgroundColor(Color.parseColor(selectedColor))
 
                 }
                 "Purple" -> {
-                    selectedColor = p1.getStringExtra("actionColor")!!
+                    selectedColor = p1.getStringExtra("selectedColor")!!
                     colorView.setBackgroundColor(Color.parseColor(selectedColor))
 
                 }
                 "Green" -> {
-                    selectedColor = p1.getStringExtra("actionColor")!!
+                    selectedColor = p1.getStringExtra("selectedColor")!!
                     colorView.setBackgroundColor(Color.parseColor(selectedColor))
 
                 }
                 "Orange" -> {
-                    selectedColor = p1.getStringExtra("actionColor")!!
+                    selectedColor = p1.getStringExtra("selectedColor")!!
                     colorView.setBackgroundColor(Color.parseColor(selectedColor))
 
                 }
                 "Black" -> {
-                    selectedColor = p1.getStringExtra("actionColor")!!
+                    selectedColor = p1.getStringExtra("selectedColor")!!
                     colorView.setBackgroundColor(Color.parseColor(selectedColor))
 
                 }
@@ -337,7 +314,7 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
                     imgNote.visibility = View.GONE
                     layoutImage.visibility = View.GONE
                     layoutWebUrl.visibility = View.GONE
-                    selectedColor = p1.getStringExtra("actionColor")!!
+                    selectedColor = p1.getStringExtra("selectedColor")!!
                     colorView.setBackgroundColor(Color.parseColor(selectedColor))
                 }
             }
@@ -389,7 +366,6 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
         return filePath
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == REQUEST_CODE_IMAGE && resultCode == RESULT_OK){
@@ -441,6 +417,5 @@ class CreateNoteFragment : BaseFragment(),EasyPermissions.PermissionCallbacks,Ea
     override fun onRationaleAccepted(requestCode: Int) {
 
     }
-
 
 }

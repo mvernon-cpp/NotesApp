@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/layoutBottomSheet"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,33 +12,28 @@
     android:background="@color/colorPrimary"
     tools:context=".MainActivity">
 
+
+
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp">
 
         <ImageView
             android:id="@+id/imgMore"
+            android:layout_gravity="center"
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
-            android:layout_gravity="center"
-            app:tint="@color/colorWhite"
-            android:src="@drawable/img_bar"
-            />
-        //android:src="@drawable/img_bar"
+            android:src="@drawable/img_bar"/>
     </FrameLayout>
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/_5sdp"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        >
-
+        android:orientation="horizontal">
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -45,16 +41,17 @@
             android:paddingStart="@dimen/_5sdp"
             android:id="@+id/fNote1">
 
-        <View
-            android:layout_width="@dimen/_24sdp"
-            android:layout_height="@dimen/_24sdp"
-            android:background="@drawable/note_color_1"/>
-        <ImageView
-            android:id="@+id/imgNote1"
-            android:layout_width="@dimen/_16sdp"
-            android:layout_height="@dimen/_16sdp"
-            android:layout_gravity="center"
-            app:tint="@color/colorWhite"/>
+            <View
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:background="@drawable/note_color_1"/>
+
+            <ImageView
+                android:id="@+id/imgNote1"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:layout_gravity="center"
+                app:tint="@color/colorWhite"/>
         </FrameLayout>
 
         <FrameLayout
@@ -67,6 +64,7 @@
                 android:layout_width="@dimen/_24sdp"
                 android:layout_height="@dimen/_24sdp"
                 android:background="@drawable/note_color_2"/>
+
             <ImageView
                 android:id="@+id/imgNote2"
                 android:layout_width="@dimen/_16sdp"
@@ -75,23 +73,6 @@
                 app:tint="@color/colorWhite"/>
         </FrameLayout>
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/_5sdp"
-            android:id="@+id/fNote3">
-
-            <View
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
-                android:background="@drawable/note_color_3"/>
-            <ImageView
-                android:id="@+id/imgNote3"
-                android:layout_width="@dimen/_16sdp"
-                android:layout_height="@dimen/_16sdp"
-                android:layout_gravity="center"
-                app:tint="@color/colorWhite"/>
-        </FrameLayout>
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -106,10 +87,10 @@
 
             <ImageView
                 android:id="@+id/imgNote4"
-                android:layout_width="14dp"
-                android:layout_height="31dp"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
                 android:layout_gravity="center"
-                app:tint="@color/colorWhite" />
+                app:tint="@color/colorWhite"/>
         </FrameLayout>
 
         <FrameLayout
@@ -122,6 +103,7 @@
                 android:layout_width="@dimen/_24sdp"
                 android:layout_height="@dimen/_24sdp"
                 android:background="@drawable/note_color_5"/>
+
             <ImageView
                 android:id="@+id/imgNote5"
                 android:layout_width="@dimen/_16sdp"
@@ -140,6 +122,7 @@
                 android:layout_width="@dimen/_24sdp"
                 android:layout_height="@dimen/_24sdp"
                 android:background="@drawable/note_color_6"/>
+
             <ImageView
                 android:id="@+id/imgNote6"
                 android:layout_width="@dimen/_16sdp"
@@ -147,7 +130,6 @@
                 android:layout_gravity="center"
                 app:tint="@color/colorWhite"/>
         </FrameLayout>
-
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -158,6 +140,7 @@
                 android:layout_width="@dimen/_24sdp"
                 android:layout_height="@dimen/_24sdp"
                 android:background="@drawable/note_color_7"/>
+
             <ImageView
                 android:id="@+id/imgNote7"
                 android:layout_width="@dimen/_16sdp"
@@ -175,14 +158,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_12ssp"
             android:text="Pick Color"
             android:fontFamily="@font/manrope_bold"
             android:maxLines="1"
             android:ellipsize="end"
             />
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/layoutImage"
@@ -193,7 +175,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@color/colorPrimary"
         android:gravity="center"
-        android:padding="@dimen/_10sdp"
+        android:layout_margin="@dimen/_10sdp"
         android:orientation="horizontal">
 
 
@@ -212,15 +194,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_12ssp"
             android:text="Add Image"
             android:fontFamily="@font/manrope_bold"
             android:maxLines="1"
             android:ellipsize="end"
             />
 
-
     </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/layoutWebUrl"
@@ -252,15 +234,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_12ssp"
             android:text="Add Web Link"
             android:fontFamily="@font/manrope_bold"
             android:maxLines="1"
             android:ellipsize="end"
             />
 
-
     </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/layoutDeleteNote"
@@ -293,14 +275,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_12ssp"
             android:text="Delete Note"
             android:fontFamily="@font/manrope_bold"
             android:maxLines="1"
             android:ellipsize="end"
             />
 
-
     </LinearLayout>
+
+
 
 </LinearLayout>
